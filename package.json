@@ -1,0 +1,22 @@
+{
+  "name": "processingreportingform779",
+  "version": "1.0.0",
+  "description": "Обработка формы 779.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/set2333/ProcessingReportingForm779.git"
+  },
+  "author": "Trofimov Evgeniy",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/set2333/ProcessingReportingForm779/issues"
+  },
+  "homepage": "https://github.com/set2333/ProcessingReportingForm779#readme",
+  "dependencies": {
+    "unzip": "^0.1.11"
+  }
+}
