@@ -11,9 +11,14 @@ if (!path) {
 
 function getNewFiles(path) { //Чтение исходного файла и создание новых файлов на его основе.
     fs.createReadStream(path).pipe(unzip.Parse()).on('entry', function(entry) {
-        entry.on('entry', function(chunk) {
-            console.log('!!!!!');
-            console.log(chunk.toString('utf8'));
+        entry.on('data', function(chunk) {
+            
+            console.log(chunk);
+            let data = chunk.toString('ascii').split('/n');
+            for(let i=0; i<data.length; i++) {
+                console.log('!______________________!');  
+                console.log(data[i]);
+            }
         });
     });
 }
