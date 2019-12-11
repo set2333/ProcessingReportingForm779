@@ -13,25 +13,25 @@ function getNewFiles(path, fileName) { //Чтение исходного фай�
     fs.createReadStream(path + '/' + fileName).pipe(unzip.Parse()).on('entry', function (entry) {
         entry.on('data', function (chunk) {
             let arrKFO = [2]; //массив, в котором мы будем хранить виды КФО найденные в отчете
-            let data = chunk.toString('ascii').split('\n');
-            
-            for (let i = 0; i < data.length; i++) { //Поиск КФО
-                console.log(data[i]);
-                if (~data[i].indexOf('JBD=')) {
-                    arrKFO.push(data[i][4]);
-//                    console.log(data[i]);
-                }
-            }
-            for (let n = 0; n < arrKFO.length; n++) { //Для каждого КФО создадим отдельный файл
-                let newFile = fs.createWriteStream(path + '/379Q01_' + arrKFO[n] + '.txt');
-                for (let i = 0; i < data.length; i++) {
-                    newFile.write(data[i] + '\n');
-//                    if (!((~data[i].indexOf('JBD=') && data[i][4] !== arrKFO[n]) || (~'1234567'.indexOf(data[i][0]) && data[i][0] !== arrKFO[n]))) {
-//                        newFile.write(data[i] + '\n');
-//                    }
-                }
-                newFile.end('');
-            }
+            let data = chunk.toJSON().data;
+            console.log(data);
+//            for (let i = 0; i < data.length; i++) { //Поиск КФО
+//                console.log(data[i]);
+//                if (~data[i].indexOf('JBD=')) {
+//                    arrKFO.push(data[i][4]);
+////                    console.log(data[i]);
+//                }
+//            }
+//            for (let n = 0; n < arrKFO.length; n++) { //Для каждого КФО создадим отдельный файл
+//                let newFile = fs.createWriteStream(path + '/379Q01_' + arrKFO[n] + '.txt');
+//                for (let i = 0; i < data.length; i++) {
+//                    newFile.write(data[i] + '\n');
+////                    if (!((~data[i].indexOf('JBD=') && data[i][4] !== arrKFO[n]) || (~'1234567'.indexOf(data[i][0]) && data[i][0] !== arrKFO[n]))) {
+////                        newFile.write(data[i] + '\n');
+////                    }
+//                }
+//                newFile.end('');
+//            }
         });
     });
 }
