@@ -12,9 +12,33 @@ if (!path) {
 function getNewFiles(path, fileName) { //Чтение исходного файла и создание новых файлов на его основе.
     fs.createReadStream(path + '/' + fileName).pipe(unzip.Parse()).on('entry', function (entry) {
         entry.on('data', function (chunk) {
-            let arrKFO = [2]; //массив, в котором мы будем хранить виды КФО найденные в отчете
+            console.log(chunk);
             let data = chunk.toJSON().data;
-            console.log(data);
+            let arrData = [];
+            let arrEndStr = [];
+            let arrStart = 0;
+            for(let i=0; i< chunk.length; i++) {
+                if (chunk[i] == 10) {
+                    arrEndStr.push(+i);
+                }
+            }
+            for(let i=0; i<arrEndStr.length; i++) {
+                arrData.push(data.slice(arrStart, (arrEndStr[i]+1)));
+                arrStart = arrEndStr[i]+1;
+            }
+            let arrKFO = []; //массив, в котором мы будем хранить виды КФО найденные в отчете.
+            for(let i=0; i<arrData.length; i++) {
+                if((arrData[i][0] == 202) && (arrData[i][1] == 194) && (arrData[i][2] == 196) && (arrData[i][3] == 61)) {
+                    arrKFO.push(arrData[i][4]-48);
+                }
+            }
+            console.log(arrKFO);
+            for (let i=0; arrKFO.length; i++) {
+                
+            }
+//            let arrKFO = [2]; //массив, в котором мы будем хранить виды КФО найденные в отчете
+//            let data = chunk.toJSON().data;
+//            console.log(data);
 //            for (let i = 0; i < data.length; i++) { //Поиск КФО
 //                console.log(data[i]);
 //                if (~data[i].indexOf('JBD=')) {
@@ -32,6 +56,9 @@ function getNewFiles(path, fileName) { //Чтение исходного фай�
 //                }
 //                newFile.end('');
 //            }
+        
+        
+        
         });
     });
 }
